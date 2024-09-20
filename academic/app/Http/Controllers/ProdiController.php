@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fakultas;
 use App\Models\Prodi;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,8 @@ class ProdiController extends Controller
      */
     public function create()
     {
-        //
+        $fakultas = Fakultas::all();
+        return view('prodi.create')->with('fakultas', $fakultas);
     }
 
     /**
