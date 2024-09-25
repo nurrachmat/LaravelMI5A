@@ -34,7 +34,19 @@ class ProdiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validasi input
+        $input = $request->validate([
+            "nama"          => "required|unique:prodis",
+            "kaprodi"       => "required",
+            "singkatan"     => "required",
+            "fakultas_id"   => "required"
+        ]);
+
+        // simpan
+        Prodi::create($input);
+
+        // redirect beserta pesan success
+        return redirect()->route('prodi.index')->with('success', $request->nama.' berhasil disimpan');
     }
 
     /**
