@@ -2,8 +2,9 @@
 
 @section('content')
 <h4>Fakultas</h4>
-<form action="{{ route('fakultas.store') }}" method="post">
+<form action="{{ route('fakultas.update', $fakultas['id']) }}" method="post">
     @csrf
+    @method('PUT')
     Nama 
     @error('nama')
         <span class="text-danger">({{ $message }})</span>
