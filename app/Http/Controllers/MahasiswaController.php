@@ -86,4 +86,12 @@ class MahasiswaController extends Controller
     {
         //
     }
+
+    public function getMahasiswa(){
+        $response['data'] = Mahasiswa::with('prodi.fakultas')->get();
+        $response['message'] = 'List data mahasiswa';
+        $response['success'] = true;
+
+        return response()->json($response, 200);
+    }
 }

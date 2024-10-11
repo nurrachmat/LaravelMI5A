@@ -98,4 +98,13 @@ class ProdiController extends Controller
     {
         //
     }
+
+    public function getProdi(){
+        // $response['data'] = Prodi::all();
+        $response['data'] = Prodi::with('fakultas')->get();
+        $response['message'] = 'List data program studi';
+        $response['success'] = true;
+
+        return response()->json($response, 200);
+    }
 }
