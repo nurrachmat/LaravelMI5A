@@ -15,3 +15,4 @@ Route::get('prodi', [ProdiController::class, 'getProdi']);
 Route::get('mahasiswa', [MahasiswaController::class, 'getMahasiswa']);
 
 Route::post('fakultas', [FakultasController::class, 'storeFakultas']);
+Route::post('prodi', [ProdiController::class, 'storeProdi']);

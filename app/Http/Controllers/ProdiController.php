@@ -107,4 +107,27 @@ class ProdiController extends Controller
 
         return response()->json($response, 200);
     }
+
+    public function storeProdi(Request $request)
+    {
+        // validasi input
+        $input = $request->validate([
+            "nama"          => "required|unique:prodis",
+            "kaprodi"       => "required",
+            "singkatan"     => "required",
+            "fakultas_id"   => "required"
+        ]);
+
+        // simpan
+        $hasil = Prodi::create($input);
+        if($hasil){ // jika data berhasil disimpan
+            $response['success'] = true;
+            $response['message'] = $request->nama." berhasil disimpan";
+            return response()->json($response, 201); // 201 Created
+        } else {
+            $response['success'] = false;
+            $response['message'] = $request->nama." gagal disimpan";
+            return response()->json($response, 400); // 400 Bad Request
+        }
+    }
 }
