@@ -146,4 +146,29 @@ class FakultasController extends Controller
             return response()->json($response, 400);
         }
     }
+
+    public function updateFakultas(Request $request, $id)
+    {
+        $fakultas = Fakultas::find($id);
+       
+        // validasi input
+        $input = $request->validate([
+            "nama"      => "required",
+            "dekan"     => "required",
+            "singkatan" => "required"
+        ]);
+
+        // update data
+        $hasil = $fakultas->update($input);
+
+        if($hasil){ // jika data berhasil disimpan
+            $response['success'] = true;
+            $response['message'] = "Fakultas berhasil diubah";
+            return response()->json($response, 200);
+        } else {
+            $response['success'] = false;
+            $response['message'] = "Fakultas gagal diubah";
+            return response()->json($response, 400);
+        }
+    }
 }
