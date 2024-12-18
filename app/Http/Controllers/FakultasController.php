@@ -46,15 +46,19 @@ class FakultasController extends Controller
         Fakultas::create($input);
 
         // redirect beserta pesan success
-        return redirect()->route('fakultas.index')->with('success', $request->nama.' berhasil disimpan');
+        return redirect()->route('fakultas.index')->with('success', $request->nama . ' berhasil disimpan');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Fakultas $fakultas)
+    public function show($fakultas)
     {
-        //
+        $fakultas = Fakultas::find($fakultas);
+        $data['success'] = true;
+        $data['message'] = "Detail data fakultas";
+        $data['result'] = $fakultas;
+        return response()->json($data, Response::HTTP_OK);
     }
 
     /**
@@ -86,7 +90,7 @@ class FakultasController extends Controller
         $fakultas->update($input);
 
         // redirect beserta pesan success
-        return redirect()->route('fakultas.index')->with('success', $request->nama.' berhasil diubah');
+        return redirect()->route('fakultas.index')->with('success', $request->nama . ' berhasil diubah');
     }
 
     /**
@@ -101,7 +105,8 @@ class FakultasController extends Controller
         return redirect()->route('fakultas.index')->with('success', 'Data fakultas berhasil dihapus');
     }
 
-    public function getFakultas(){
+    public function getFakultas()
+    {
         $response['data'] = Fakultas::all();
         $response['message'] = 'List data fakultas';
         $response['success'] = true;
@@ -109,7 +114,8 @@ class FakultasController extends Controller
         return response()->json($response, 200);
     }
 
-    public function storeFakultas(Request $request){
+    public function storeFakultas(Request $request)
+    {
         // validasi input
         $input = $request->validate([
             "nama"      => "required|unique:fakultas",
@@ -119,13 +125,13 @@ class FakultasController extends Controller
 
         // simpan
         $hasil = Fakultas::create($input);
-        if($hasil){ // jika data berhasil disimpan
+        if ($hasil) { // jika data berhasil disimpan
             $response['success'] = true;
-            $response['message'] = $request->nama." berhasil disimpan";
+            $response['message'] = $request->nama . " berhasil disimpan";
             return response()->json($response, 201); // 201 Created
         } else {
             $response['success'] = false;
-            $response['message'] = $request->nama." gagal disimpan";
+            $response['message'] = $request->nama . " gagal disimpan";
             return response()->json($response, 400); // 400 Bad Request
         }
     }
@@ -136,7 +142,7 @@ class FakultasController extends Controller
         $fakultas = Fakultas::find($id);
         // dd($fakultas);
         $hasil = $fakultas->delete();
-        if($hasil){ // jika data berhasil disimpan
+        if ($hasil) { // jika data berhasil disimpan
             $response['success'] = true;
             $response['message'] = "Fakultas berhasil dihapus";
             return response()->json($response, 200);
@@ -150,7 +156,7 @@ class FakultasController extends Controller
     public function updateFakultas(Request $request, $id)
     {
         $fakultas = Fakultas::find($id);
-       
+
         // validasi input
         $input = $request->validate([
             "nama"      => "required",
@@ -161,7 +167,7 @@ class FakultasController extends Controller
         // update data
         $hasil = $fakultas->update($input);
 
-        if($hasil){ // jika data berhasil disimpan
+        if ($hasil) { // jika data berhasil disimpan
             $response['success'] = true;
             $response['message'] = "Fakultas berhasil diubah";
             return response()->json($response, 200);

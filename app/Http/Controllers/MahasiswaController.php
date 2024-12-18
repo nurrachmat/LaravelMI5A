@@ -57,10 +57,15 @@ class MahasiswaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Mahasiswa $mahasiswa)
+    public function show($mahasiswa)
     {
         // dd($mahasiswa);
-        return view('mahasiswa.show')->with('mahasiswa', $mahasiswa);
+        //return view('mahasiswa.show')->with('mahasiswa', $mahasiswa);
+        $mahasiswa = Mahasiswa::find($mahasiswa);
+        $data['success'] = true;
+        $data['message'] = "Detail data mahasiswa";
+        $data['result'] = $mahasiswa;
+        return response()->json($data, Response::HTTP_OK);
     }
 
     /**
