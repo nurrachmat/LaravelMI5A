@@ -51,7 +51,7 @@ class MahasiswaController extends Controller
         Mahasiswa::create($input);
 
         // redirect beserta pesan success
-        return redirect()->route('mahasiswa.index')->with('success', $request->nama.' berhasil disimpan');
+        return redirect()->route('mahasiswa.index')->with('success', $request->nama . ' berhasil disimpan');
     }
 
     /**
@@ -82,12 +82,25 @@ class MahasiswaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Mahasiswa $mahasiswa)
+    public function destroyMahasiswa($id)
     {
-        //
+        // cari data di tabel fakultas berdasarkan "id" fakultas
+        $mahasiswa = Mahasiswa::find($id);
+        // dd($fakultas);
+        $hasil = $mahasiswa->delete();
+        if ($hasil) { // jika data berhasil disimpan
+            $response['success'] = true;
+            $response['message'] = "Mahasiswa berhasil dihapus";
+            return response()->json($response, 200);
+        } else {
+            $response['success'] = false;
+            $response['message'] = "Mahasiswa gagal dihapus";
+            return response()->json($response, 400);
+        }
     }
 
-    public function getMahasiswa(){
+    public function getMahasiswa()
+    {
         $response['data'] = Mahasiswa::with('prodi.fakultas')->get();
         $response['message'] = 'List data mahasiswa';
         $response['success'] = true;
@@ -118,15 +131,14 @@ class MahasiswaController extends Controller
         }
 
         $hasil = Mahasiswa::create($input); // simpan
-        if($hasil){ // jika data berhasil disimpan
+        if ($hasil) { // jika data berhasil disimpan
             $response['success'] = true;
-            $response['message'] = $request->nama." berhasil disimpan";
+            $response['message'] = $request->nama . " berhasil disimpan";
             return response()->json($response, 201); // 201 Created
         } else {
             $response['success'] = false;
-            $response['message'] = $request->nama." gagal disimpan";
+            $response['message'] = $request->nama . " gagal disimpan";
             return response()->json($response, 400); // 400 Bad Request
         }
     }
-
 }

@@ -22,5 +22,6 @@ Route::delete('prodi/{id}', [ProdiController::class, 'destroyProdi']);
 
 Route::get('mahasiswa', [MahasiswaController::class, 'getMahasiswa']);
 Route::post('mahasiswa', [MahasiswaController::class, 'storeMahasiswa']);
+Route::delete('mahasiswa/{id}', [MahasiswaController::class, 'destroyMahasiswa']);
 
 Route::post('login', [AuthController::class, 'login']);
