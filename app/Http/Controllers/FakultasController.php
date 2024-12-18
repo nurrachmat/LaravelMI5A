@@ -58,7 +58,7 @@ class FakultasController extends Controller
         $data['success'] = true;
         $data['message'] = "Detail data fakultas";
         $data['result'] = $fakultas;
-        return response()->json($data, Response::HTTP_OK);
+        return response()->json($data, 200);
     }
 
     /**

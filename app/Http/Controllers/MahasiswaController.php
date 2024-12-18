@@ -65,7 +65,7 @@ class MahasiswaController extends Controller
         $data['success'] = true;
         $data['message'] = "Detail data mahasiswa";
         $data['result'] = $mahasiswa;
-        return response()->json($data, Response::HTTP_OK);
+        return response()->json($data, 200);
     }
 
     /**

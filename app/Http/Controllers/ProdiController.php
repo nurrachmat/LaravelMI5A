@@ -59,11 +59,11 @@ class ProdiController extends Controller
             $data['success'] = true;
             $data['message'] = "Data prodi berhasil ditemukan";
             $data['result'] = $prodi;
-            return response()->json($data, Response::HTTP_OK);
+            return response()->json($data, 200);
         } else {
             $data['success'] = false;
             $data['message'] = "Data prodi tidak ditemukan";
-            return response()->json($data, Response::HTTP_NOT_FOUND);
+            return response()->json($data, 400);
         }
     }
 
