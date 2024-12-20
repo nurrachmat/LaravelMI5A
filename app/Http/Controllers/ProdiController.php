@@ -46,15 +46,25 @@ class ProdiController extends Controller
         Prodi::create($input);
 
         // redirect beserta pesan success
-        return redirect()->route('prodi.index')->with('success', $request->nama.' berhasil disimpan');
+        return redirect()->route('prodi.index')->with('success', $request->nama . ' berhasil disimpan');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Prodi $prodi)
+    public function show($prodi)
     {
-        //
+        $prodi = Prodi::with('fakultas')->find($prodi);
+        if ($prodi) {
+            $data['success'] = true;
+            $data['message'] = "Data prodi berhasil ditemukan";
+            $data['result'] = $prodi;
+            return response()->json($data, 200);
+        } else {
+            $data['success'] = false;
+            $data['message'] = "Data prodi tidak ditemukan";
+            return response()->json($data, 400);
+        }
     }
 
     /**
@@ -65,8 +75,8 @@ class ProdiController extends Controller
         $prodi = Prodi::find($id);
         $fakultas = Fakultas::all();
         return view('prodi.edit')
-                    ->with('prodi', $prodi)
-                    ->with('fakultas', $fakultas);
+            ->with('prodi', $prodi)
+            ->with('fakultas', $fakultas);
     }
 
     /**
@@ -88,18 +98,31 @@ class ProdiController extends Controller
         $prodi->update($input);
 
         // redirect beserta pesan success
-        return redirect()->route('prodi.index')->with('success', $request->nama.' berhasil diubah');
+        return redirect()->route('prodi.index')->with('success', $request->nama . ' berhasil diubah');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Prodi $prodi)
+    public function destroyProdi($id)
     {
-        //
+        // cari data di tabel fakultas berdasarkan "id" fakultas
+        $prodi = Prodi::find($id);
+        // dd($fakultas);
+        $hasil = $prodi->delete();
+        if ($hasil) { // jika data berhasil disimpan
+            $response['success'] = true;
+            $response['message'] = "Prodi berhasil dihapus";
+            return response()->json($response, 200);
+        } else {
+            $response['success'] = false;
+            $response['message'] = "Prodi gagal dihapus";
+            return response()->json($response, 400);
+        }
     }
 
-    public function getProdi(){
+    public function getProdi()
+    {
         // $response['data'] = Prodi::all();
         $response['data'] = Prodi::with('fakultas')->get();
         $response['message'] = 'List data program studi';
@@ -120,13 +143,13 @@ class ProdiController extends Controller
 
         // simpan
         $hasil = Prodi::create($input);
-        if($hasil){ // jika data berhasil disimpan
+        if ($hasil) { // jika data berhasil disimpan
             $response['success'] = true;
-            $response['message'] = $request->nama." berhasil disimpan";
+            $response['message'] = $request->nama . " berhasil disimpan";
             return response()->json($response, 201); // 201 Created
         } else {
             $response['success'] = false;
-            $response['message'] = $request->nama." gagal disimpan";
+            $response['message'] = $request->nama . " gagal disimpan";
             return response()->json($response, 400); // 400 Bad Request
         }
     }
