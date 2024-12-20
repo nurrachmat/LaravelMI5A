@@ -130,4 +130,48 @@ class ProdiController extends Controller
             return response()->json($response, 400); // 400 Bad Request
         }
     }
+
+    public function updateProdi(Request $request, $id)
+    {
+        $prodi = Prodi::find($id);
+
+        // validasi input
+        $input = $request->validate([
+            "nama"          => "required",
+            "kaprodi"       => "required",
+            "singkatan"     => "required",
+            "fakultas_id"   => "required"
+        ]);
+
+        // simpan
+        $hasil = $prodi->update($input);
+
+        if($hasil){ // jika data berhasil disimpan
+            $response['success'] = true;
+            $response['message'] = "Prodi berhasil diubah";
+            return response()->json($response, 200);
+        } else {
+            $response['success'] = false;
+            $response['message'] = "Prodi gagal diubah";
+            return response()->json($response, 400);
+        }
+
+    }
+
+    public function destroyProdi($id)
+    {
+        // cari data di tabel prodi berdasarkan "id" prodi
+        $prodi = Prodi::find($id);
+        // dd($prodi);
+        $hasil = $prodi->delete();
+        if($hasil){ // jika data berhasil disimpan
+            $response['success'] = true;
+            $response['message'] = "Prodi berhasil dihapus";
+            return response()->json($response, 200);
+        } else {
+            $response['success'] = false;
+            $response['message'] = "Prodi gagal dihapus";
+            return response()->json($response, 400);
+        }
+    }
 }

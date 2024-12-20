@@ -18,6 +18,8 @@ Route::put('fakultas/{id}', [FakultasController::class, 'updateFakultas']); //->
 
 Route::get('prodi', [ProdiController::class, 'getProdi']);
 Route::post('prodi', [ProdiController::class, 'storeProdi']);
+Route::put('prodi/{id}', [ProdiController::class, 'updateProdi']); 
+Route::delete('prodi/{id}', [ProdiController::class, 'destroyProdi']); 
 
 Route::get('mahasiswa', [MahasiswaController::class, 'getMahasiswa']);
 Route::post('mahasiswa', [MahasiswaController::class, 'storeMahasiswa']);
