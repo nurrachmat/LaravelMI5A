@@ -22,7 +22,6 @@ Route::post('prodi', [ProdiController::class, 'storeProdi']);
 Route::delete('prodi/{id}', [ProdiController::class, 'destroyProdi']);
 Route::get('/prodi/{id}', [ProdiController::class, 'show']);
 Route::put('prodi/{id}', [ProdiController::class, 'updateProdi']); 
-Route::delete('prodi/{id}', [ProdiController::class, 'destroyProdi']); 
 
 Route::get('mahasiswa', [MahasiswaController::class, 'getMahasiswa']);
 Route::post('mahasiswa', [MahasiswaController::class, 'storeMahasiswa']);
